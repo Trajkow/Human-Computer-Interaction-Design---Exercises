@@ -1,0 +1,1 @@
+default_app_config = 'hospital_app.apps.HospitalAppConfig'
