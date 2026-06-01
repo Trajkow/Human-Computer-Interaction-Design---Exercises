@@ -30,7 +30,7 @@ class AppointmentAdmin(admin.ModelAdmin):
                 if doctor: obj.responsible_doctor_id = doctor.id
         else:
             old = Appointment.objects.get(pk=obj.pk)
-            if old.status == 'in_progress' and obj.status == 'completed':
+            if old.status == 'in_progress' and obj.status == 'finished':
                 obj.responsible_doctor.completed_appointments += 1
                 obj.responsible_doctor.save()
         super().save_model(request, obj, form, change)
@@ -48,6 +48,17 @@ class AppointmentAdmin(admin.ModelAdmin):
         if obj and obj.status != 'scheduled':
             return False
         return super().has_delete_permission(request, obj)
+
+    def getqueryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        doctor_qs = Doctor.objects.filter(user=request.user)
+        if not doctor_qs.exists():
+            return qs.none()
+        doctor = doctor_qs.first()
+        return qs.filter(Q(responsible_doctor=doctor) | Q(appointmentassignment__doctor=doctor)).distinct()
+
 
 admin.site.register(Doctor, DoctorAdmin)
 admin.site.register(Patient, PatientAdmin)

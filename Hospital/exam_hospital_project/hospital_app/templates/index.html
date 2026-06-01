@@ -1,1 +1,88 @@
-<h1>Hello World</h1>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<section class="py-5 bg-success text-white text-center">
+    <h1 class="display-5 fw-bold">Doctors</h1>
+    <p class="lead">Browse by specialty</p>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center text-success mb-4">Cardiologists</h2>
+        <div class="row">
+            {% for doc in cardiologists %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm text-center">
+                        {% if doc.image %}
+                        <img src="{{ doc.image.url }}"
+                             class="rounded-circle mx-auto mt-4"
+                             style="width:150px;height:150px;object-fit:cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5>{{ doc.full_name }}</h5>
+                            <span class="badge bg-success">{{ doc.get_specialty_display }}</span>
+                            <p><strong>Institution:</strong> {{ doc.institution }}</p>
+                            <p><strong>Email:</strong> {{ doc.email }}</p>
+                            <a href="{% url "doctor_detail" doc.id %}" class="btn btn-outline-success btn-sm mt-2">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- Repeat for Dermatologists and Neurologists -->
+    <section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center text-success mb-4">Dermatologists</h2>
+        <div class="row">
+            {% for doc in dermatologists %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm text-center">
+                        {% if doc.image %}
+                        <img src="{{ doc.image.url }}"
+                             class="rounded-circle mx-auto mt-4"
+                             style="width:150px;height:150px;object-fit:cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5>{{ doc.full_name }}</h5>
+                            <span class="badge bg-success">{{ doc.get_specialty_display }}</span>
+                            <p><strong>Institution:</strong> {{ doc.institution }}</p>
+                            <p><strong>Email:</strong> {{ doc.email }}</p>
+                            <a href="{% url "doctor_detail" doc.id %}" class="btn btn-outline-success btn-sm mt-2">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{#    ==================================#}
+    <section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center text-success mb-4">Neurologists</h2>
+        <div class="row">
+            {% for doc in neurologists %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm text-center">
+                        {% if doc.image %}
+                        <img src="{{ doc.image.url }}"
+                             class="rounded-circle mx-auto mt-4"
+                             style="width:150px;height:150px;object-fit:cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5>{{ doc.full_name }}</h5>
+                            <span class="badge bg-success">{{ doc.get_specialty_display }}</span>
+                            <p><strong>Institution:</strong> {{ doc.institution }}</p>
+                            <p><strong>Email:</strong> {{ doc.email }}</p>
+                            <a href="{% url "doctor_detail" doc.id %}" class="btn btn-outline-success btn-sm mt-2">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

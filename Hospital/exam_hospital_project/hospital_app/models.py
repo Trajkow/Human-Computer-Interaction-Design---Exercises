@@ -51,7 +51,7 @@ class Appointment(models.Model):
     type = models.CharField(max_length=100, null=True, blank=True, choices=appointment_type_choices)
     symptom_description = models.CharField(max_length=100, null=True, blank=True)
     status = models.CharField(max_length=100, null=True, blank=True, choices=status_choices)
-    datetime = models.DateField(null=True, blank=True)
+    datetime = models.DateTimeField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     patient = (models.ForeignKey(Patient, on_delete=models.SET_NULL, null=True, blank=True))
     responsible_doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='responsible_appointments')
